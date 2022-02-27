@@ -1,0 +1,31 @@
+<div class="container" style="margin-top: 20px;">
+    <p-table [value]="projectList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Detail</th>
+                <th>CreatedOn</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-project>
+            <tr [ngClass]="{'inActive': project.isActive == false}">
+                <td>{{project.id}}</td>
+                <td>{{project.name}}</td>
+                <td>{{project.detail}}</td>
+                <td>{{project.createdOn}}</td>
+                <td>
+                    <a pButton pRipple type="button" [routerLink]="['/update-project',project.id]" icon="pi pi-user-edit"
+                        class="p-button-rounded"></a>
+                    <a pButton pRipple type="button" (click)="remove(project.id)" style="margin-left: 5px;"
+                        icon="pi pi-trash" class="p-button-rounded"></a>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <a [routerLink]="['/add-project']" class="btn btn-primary">Add New</a>
+        </ng-template>
+    </p-table>
+</div>
