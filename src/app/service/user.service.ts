@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { User } from '../user';
+import { FormBuilder } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,19 +12,21 @@ export class UserService {
     { id: 1, firstName: 'Ankit Sahu', lastName :'lohra,', email: 'deep@gmail.com', password: '8978786933', }
   ];
 
-  constructor() { }
+  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  readonly BaseURI = 'https://localhost:44332/';
 
   getUsers() {
-    return this.userList
+   // return this.userList
+   return this.http .get(this.BaseURI+'api/user');
   }
 
   getUsersByID(id: number) {
-    return this.userList.find(x => x.id == id)
+    return this.http .get(this.BaseURI+'api/user?id=1');
   }
 
   addUser(user: User) {
     user.id = new Date().getTime();
-    this.userList.push(user);
+    return this.http.post(this.BaseURI + 'api/user', user);
   }
 
   updateUser(user: User) {
